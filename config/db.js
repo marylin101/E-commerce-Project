@@ -5,7 +5,7 @@ let db;
 const connectDB = async() => {
     try{
         const client =  new MongoClient(process.env.MONGO_URI);
-        await client.connect;
+        await client.connect();
         db = client.db();
         console.log("MongoDB connected successfully.")
     }
@@ -17,7 +17,7 @@ const connectDB = async() => {
 
 const getdb = () => {
     if(!db){
-        throw new error("Database is not connected.");
+        throw new Error("Database is not connected.");
     }
     return db
 };
