@@ -1,0 +1,14 @@
+{
+  "name": "study-desk-backend",
+  "version": "1.0.0",
+  "description": "The Study Desk - e-commerce stationery store backend",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "test:connection": "node scripts/testConnection.js"
+  },
+  "dependencies": {
+    "mongodb": "^6.9.0",
+    "dotenv": "^16.4.5"
+  }
+}
