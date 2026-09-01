@@ -11,6 +11,7 @@ const productRoutes = require('./routes/productRoutes');
 const cartRoutes = require('./routes/cartRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
+const APIhealthRoutes = require('./routes/APIhealthRoutes');
 
 const errorHandler = require('./middleware/errorHandler');
 
@@ -27,14 +28,8 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-app.get('/api/health', (req, res) =>{
-    res.status(200).json({
-        success: true,
-        data: { message: "The Study Desk's API is running."},
-        error: null
-        });
-});
 
+app.use('/api/health', APIhealthRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/cart', cartRoutes);
