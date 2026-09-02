@@ -1,8 +1,8 @@
 require('dotenv').config();
 const { MongoClient } = require('mongodb');
 
-const uri = process.env.MONGODB_URI;
-const dbName = process.env.DB_NAME || 'studydesk';
+const uri = process.env.MONGO_URI;
+const dbName = process.env.DB_NAME || 'thestudydesk';
 
 if (!uri) {
   throw new Error('MONGODB_URI is not set. Copy .env.example to .env and add your connection string.');
