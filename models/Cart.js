@@ -1,8 +1,9 @@
-const cartFields = {
-    _id: null,
-    userId: null,
-    items: Array,
-    updatedAt: Date,
-};
+function buildCartDocument({ userId, items = [] }) {
+  return { userId, items, updatedAt: new Date() };
+}
 
-module.exports =   cartFields;
+function buildCartItem({ productId, quantity, priceAtAdd }) {
+  return { productId, quantity, priceAtAdd };
+}
+
+module.exports = { buildCartDocument, buildCartItem };

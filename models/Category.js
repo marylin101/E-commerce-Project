@@ -1,8 +1,9 @@
-const catFields = {
-    _id: null,
-    name: String,
-    slug: String
-};
+function slugify(name) {
+  return name.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+}
 
+function buildCategoryDocument({ name, slug }) {
+  return { name, slug: slug || slugify(name) };
+}
 
-module.exports = catFields;
+module.exports = { buildCategoryDocument, slugify };

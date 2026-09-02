@@ -1,10 +1,7 @@
-const userField = {
-    _id: null,
-    name: String,
-    email: String,
-    passwordHash: String,
-    role: String,
-    createdAt: Date
-};
+const ROLES = ['customer', 'admin'];
 
-module.exports = userField;
+function buildUserDocument({ name, email, passwordHash, role = 'customer' }) {
+  return { name, email, passwordHash, role, createdAt: new Date() };
+}
+
+module.exports = { ROLES, buildUserDocument };

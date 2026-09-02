@@ -1,10 +1,5 @@
-const addressFields ={
-_id: null,
-userId: null,
-line1: String,
-city: String,
-province: String,
-postalCode: Number
-};
+function buildAddressDocument({ userId, line1, city, province, postalCode }) {
+  return { userId, line1, city, province, postalCode };
+}
 
-module.exports = addressFields;
+module.exports = { buildAddressDocument };

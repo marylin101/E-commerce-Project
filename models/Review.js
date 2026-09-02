@@ -1,10 +1,5 @@
-const reviewFields = {
-    _id: null,
-    productId: null,
-    userId: null,
-    rating: Number,
-    comment: String,
-    createdAt: Date
-};
+function buildReviewDocument({ productId, userId, rating, comment = '' }) {
+  return { productId, userId, rating, comment, createdAt: new Date() };
+}
 
-module.exports = reviewFields;
+module.exports = { buildReviewDocument };
