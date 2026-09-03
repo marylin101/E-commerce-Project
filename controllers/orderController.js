@@ -4,8 +4,8 @@ const asyncHandler = require('../utils/asyncHandler');
 
 const createOrder = asyncHandler(async (req, res) => {
   const userId = req.user.id;
-  const orderData = req.body;
-  const order = await orderService.createOrder(userId, orderData);
+  const {addressId} = req.body;
+  const order = await orderService.createOrder(userId, addressId);
   return sucResponse(res, { order }, 201);
 });
 
@@ -18,7 +18,7 @@ const getOrders = asyncHandler(async (req, res) => {
 const getOrderById = asyncHandler(async (req, res) => {
   const userId = req.user.id;
   const orderId = req.params.id;
-  const order = await orderService.getOrderById(userId, orderId);
+  const order = await orderService.getOrderById(userId, orderId, req.user.role);
   return sucResponse(res, { order }, 200);
 });
 

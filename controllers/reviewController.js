@@ -3,7 +3,7 @@ const asyncHandler = require('../utils/asyncHandler');
 const { sucResponse } = require('../utils/apiResponse');
 
 const createReview = asyncHandler(async (req, res) => {
-    const productId = req.params.productId || req.pamas.id || req.body.productId;
+    const productId = req.params.productId || req.params.id || req.body.productId;
     const { rating, comment } = req.body;
     const userId = req.user.id;
     const review = await reviewService.createReview({ productId, userId, rating, comment });

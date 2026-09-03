@@ -8,8 +8,8 @@ const sucResponse = (res, data, statuscode) => {
     });
 };
 
-const errResponse = (res, err) => {
-    const message = 'There was an error while trying to process the request'+err.message;
+const errResponse = (res, err, statuscode = 500) => {
+    const message = 'There was an error while trying to process the request'+ (err.message || err);
     return res.status(statuscode).json({
         success: false,
         data: null,

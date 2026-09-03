@@ -1,12 +1,8 @@
 require('dotenv').config();
 const { MongoClient } = require('mongodb');
 
-const uri = process.env.MONGO_URI;
 const dbName = process.env.DB_NAME || 'thestudydesk';
 
-if (!uri) {
-  throw new Error('MONGODB_URI is not set. Copy .env.example to .env and add your connection string.');
-}
 
 let client;
 let db;
@@ -15,7 +11,11 @@ let connectingPromise = null;
 async function connectDB() {
   if (db) return db;
   if (connectingPromise) return connectingPromise;
-
+  const uri = process.env.MONGO_URI;
+  if (!uri) {
+    throw new Error('MONGODB_URI is not set. Copy .env.example to .env and add your connection string.');
+  }
+  
   connectingPromise = (async () => {
     client = new MongoClient(uri, { maxPoolSize: 10 });
     await client.connect();

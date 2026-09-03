@@ -14,7 +14,7 @@ async function getCart() {
 
 async function addItem(userId, { productId, quantity, priceAtAdd }) {
   requireValidObjectId(userId, 'userId');
-  requireFields({ productId, quantity, priceAtAdd });
+  requireFields({ productId, quantity, priceAtAdd }, ['productId', 'quantity', 'priceAtAdd']);
   requireValidObjectId(productId, 'productId');
   requireNonNegativeNumber(quantity, 'quantity');
   requireNonNegativeNumber(priceAtAdd, 'priceAtAdd');
