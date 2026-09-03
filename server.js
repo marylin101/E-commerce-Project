@@ -1,6 +1,4 @@
-//Loading environment viariables from .env file
 require('dotenv').config();
-
 const express = require('express');
 const cors = require('cors');
 
@@ -10,7 +8,6 @@ const authRoutes = require('./routes/authRoutes');
 const productRoutes = require('./routes/productRoutes');
 const cartRoutes = require('./routes/cartRoutes');
 const orderRoutes = require('./routes/orderRoutes');
-const reviewRoutes = require('./routes/reviewRoutes');
 const APIhealthRoutes = require('./routes/APIhealthRoutes');
 
 const errorHandler = require('./middleware/errorHandler');
@@ -34,7 +31,6 @@ app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/orders', orderRoutes);
-app.use('/api/reviews', reviewRoutes);
 
 app.use((req,res,next) =>{
     const error = new Error('Cannot '+req.method+' '+req.originalUrl);

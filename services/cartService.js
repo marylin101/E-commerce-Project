@@ -1,41 +1,39 @@
 const cartRepository = require('../repositories/cartRepository');
 const productRepository = require('../repositories/productRepository');
-const { badReq } = require('../utils/badRequests');
-
-let cart;
-
-const getOrCreateCart = async (userId) => {
-    cart = await cartRepository.getCartByUserId(userId);
-    if(!cart){
-        cart = await cartRepository.createCart(userId);
-    }
-    return cart;
-};
+const { badReq, notFound } = require('../utils/badRequests');
 
 const getCart = async (userId) => {
-    cart = await getOrCreateCart(userId);
+    const cart = await cartRepository.getCart(userId);
     return cart;
 };
 
 const addItem = async (userId, productId, quantity) => {
     if(!productId || !quantity || quantity < 1){
-        const reason = !productId ? 'The product ID is required.' :(!quantity?'Please enter a valid quantity.': 'The quantity must be 1 or greater than 1.'); 
-        return badReq(reason);
+        const reason = !productId 
+        ? 'The product ID is required.' 
+        :(!quantity?'Please enter a valid quantity.': 'The quantity must be 1 or greater than 1.'); 
+        throw badReq(reason);
     }
-    const product = await productRepository.getProductById(productId);
+    const product = await productRepository.findProductById(productId);
     if(!product){
-        return badReq('Product not found.');
+        throw badReq('Product not found.');
     }
-    await getOrCreateCart(userId);
-    const addedItem = await cartRepository.addItemToCart(userId, productId, quantity);
-    return addedItem;
+    const updatedCart = await cartRepository.addItem(userId, {
+        productId,
+        quantity: Number(quantity),
+        priceAtAdd: product.price
+    });
+    return updatedCart;
 };
 
 const updateItem = async (userId, productId, quantity) => {
     if(!quantity || quantity < 1){
-        return badReq('The products quantity must be at least 1.');
+        throw badReq('The products quantity must be at least 1.');
     };
-    const updatedItem = await cartRepository.updateQuantity(userId, productId, quantity);
+    const updatedItem = await cartRepository.updateQuantity(userId, productId, Number(quantity));
+    if(!updatedItem){
+        throw notFound("The product was not found in the cart.");
+    }
     return updatedItem;
 };
 
