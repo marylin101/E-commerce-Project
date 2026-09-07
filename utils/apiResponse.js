@@ -1,20 +1,9 @@
-const sucResponse = (res, data, statuscode) => {
-    const message = 'The request was successful';
+const sucResponse = (res, data, statuscode = 200 ) => {
     return res.status(statuscode).json({
-        status: 'success',
+        success: true,
         data,
         error: null,
-        message,
     });
 };
 
-const errResponse = (res, err, statuscode = 500) => {
-    const message = 'There was an error while trying to process the request'+ (err.message || err);
-    return res.status(statuscode).json({
-        success: false,
-        data: null,
-        error: {message},
-    });
-};
-
-module.exports = { sucResponse, errResponse };
+module.exports = {sucResponse};

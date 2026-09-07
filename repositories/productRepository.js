@@ -1,6 +1,6 @@
 const { ObjectId } = require('mongodb');
 const { getDb } = require('../config/database');
-const { requireFields, requireValidObjectId } = require('../utils/validators');
+const { requireFields, requireValidObjectId, requireNonNegativeNumber, handleDuplicateKeyError } = require('../utils/validators');
 
 function collection() {
   return getDb().collection('products');
