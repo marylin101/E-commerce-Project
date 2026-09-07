@@ -3,7 +3,7 @@ const ApiError = require('../utils/ApiError');
 // eslint-disable-next-line no-unused-vars
 function errorHandler(err, req, res, next) {
   // Known, expected errors (thrown deliberately via ApiError.*)
-  if (err instanceof ApiError) {
+  if (err instanceof ApiError|| err.statusCode) {
     return res.status(err.statusCode).json({
       success: false,
       data: null,
