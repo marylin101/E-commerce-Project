@@ -16,6 +16,6 @@ router.put('/:id', authenticate, requireAdmin,  productController.updateProduct)
 router.delete('/:id', authenticate, requireAdmin, productController.deleteProduct);
 
 //review routes
-router.post('/reviews/:id/reviews', authenticate, validateRequest(validateCreateReview), reviewController.createReview);
-router.get('/reviews/:id/reviews', reviewController.getReviewsById);
+router.post('/:id/reviews', authenticate, validateRequest(validateCreateReview), reviewController.createReview);
+router.get('/:id/reviews', reviewController.getReviewsById);
 module.exports = router;

@@ -28,17 +28,17 @@ const result = await collection().insertOne(doc);
 return { _id: result.insertedId, ...doc };
 }
 
-async function findOrdersByUserId(userId) {
-  requireValidObjectId(id, 'addressId');
+async function findOrderById(id) {
+  requireValidObjectId(id, 'orderId');
   return collection().findOne({ _id: new ObjectId(id) });
 }
 
-async function findOrderById(id) {
+async function findOrderByUserId(userId) {
   requireValidObjectId(userId, 'userId');
   return collection().find({ userId: new ObjectId(userId) }).toArray();
 }
 
-async function updateOrderStatus(id, updates) {
+async function updateOrderStatus(id, status) {
 requiredValidObjectId(id, 'orderId');
 requireValidStatus(status, ORDER_STATUSES, 'status');
 return collection().findOneAndUpdate(
@@ -48,4 +48,5 @@ return collection().findOneAndUpdate(
 );
 }
 
-module.exports = { createOrder, findOrdersByUserId, findOrderById, updateOrderStatus};
+
+module.exports = { createOrder, findOrderByUserId, findOrderById, updateOrderStatus};

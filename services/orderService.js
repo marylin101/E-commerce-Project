@@ -53,7 +53,7 @@ const createOrder = async (userId, addressId) => {
 
 };
 
-const getOrdersByUserId = async (userId) => {
+const getOrders = async (userId) => {
     const orders = await orderRepository.findOrdersByUserId(userId);
     if(!orders || orders.length === 0){
         throw notFound('There is no orders found for this user.');
@@ -61,13 +61,13 @@ const getOrdersByUserId = async (userId) => {
     return orders || [];
 };
 
-const getOrder = async (userId, orderId) => {
+const getOrderById = async (userId, orderId, requestingUserRole) => {
     const order = await orderRepository.findOrderById(orderId);
     if(!order){
         throw notFound('Order not found.');
     }
-   if(requestingUser.role !== "admin" && String(order.userId) !== String(userId)){ 
-        throw forbidden('Youdo not have access to this order.');
+   if(requestingUserRole !== "admin" && String(order.userId) !== String(userId)){ 
+        throw forbidden('You do not have access to this order.');
     }
     return order;
 };
@@ -85,4 +85,4 @@ const updateOrderStatus = async (orderId, status) => {
     return updated;
 };
 
-module.exports = { createOrder, getOrdersByUserId, getOrder, updateOrderStatus };
+module.exports = { createOrder, getOrderById, getOrders, updateOrderStatus };

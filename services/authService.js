@@ -12,7 +12,7 @@ function toPublicUser(user) {
 }
 
 async function register({ name, email, password, role }) {
-  const existing = await userRepository.findByEmail(email);
+  const existing = await userRepository.findUserByEmail(email);
   if (existing) {
     throw ApiError.badRequest('An account with this email already exists.');
   }
