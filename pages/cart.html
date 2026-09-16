@@ -8,13 +8,55 @@
 </head>
 <body>
     <div id="header-placeholder"></div>
-    <div id="main">
-    <p></p>
-    <p></p>
-    <p></p>
-    <p></p>
-    </div>
+    <main class="cart-container">
+        <section id="emptyCart" class="empty-cart" style="display: none;">
+            <div class="icon-circle">
+                <span><img src="../assets/cart.png" alt="cart icon"></span>
+            </div>
+            <h2>Your cart is currently empty</h2>
+            <p>Looks like you haven't added items to your study desk yet.</p>
+            <a  href="../pages/home.html" class="shop-btn">Start Shopping</a>
+        </section>
+        <div id="activeCartView" class="active-cart-layout">
+    
+        <section class="cart-items-card">
+            <div class="cart-header">
+                <h1 class="cart-title">Your Cart</h1>
+                <span id="totalItemsCount" class="item-count">0 Items</span>
+            </div>
+            <div id="cartItemsList" class="cart-list"></div>
+            <div class="cart-actions">
+                <a href="/pages/home.html" class="continue-shopping">← Continue Shopping</a>
+            </div>
+        </section>
+
+        <aside class="cart-summary-card">
+            <h2 class="summary-title">Order Summary</h2>
+
+            <div class="summary-row">
+                <span>Subtotal</span>
+                <span id="subtotalVal" class="summary-val">R 0.00</span>
+            </div>
+
+            <div class="summary-row">
+                <span>Estimated Shipping</span>
+                <span id="shippingVal" class="summary-val">R 65.00</span>
+            </div>
+
+            <div class="summary-divider"></div>
+
+            <div class="summary-row total-row">
+                <span>Total</span>
+                <span id="grandTotalVal" class="total-val">R 0.00</span>
+            </div>
+
+            <a href="/pages/checkout.html" class="checkout-btn">Proceed to Checkout</a>
+        </aside>
+
+    </div> 
+    </main>
     <div id="footer-placeholder"></div>
     <script src="../partials/script.js"></script>
+    <script src="../script/cartscript.js"></script>
 </body>
 </html>
