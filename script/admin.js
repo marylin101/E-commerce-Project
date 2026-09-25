@@ -31,7 +31,7 @@ async function apiFetch(endpoint, options = {}) {
         ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
         ...options.headers,
     };
-    const baseUrl = typeof getApiBaseUrl === 'function' ? getApiBaseUrl() : 'http://localhost:5000/api';
+    const baseUrl = typeof getApiBaseUrl === 'function' ? getApiBaseUrl() : '/api';
     const response = await fetch(`${baseUrl}${endpoint}`, { ...options, headers });
     const json = await response.json();
     if (!response.ok) {
@@ -373,7 +373,7 @@ function setupImageUploadHandler() {
                 try {
                     if (urlInput) urlInput.placeholder = 'Uploading image...';
                     const token = getAuthToken();
-                    const baseUrl = typeof getApiBaseUrl === 'function' ? getApiBaseUrl() : 'http://localhost:5000/api';
+                    const baseUrl = typeof getApiBaseUrl === 'function' ? getApiBaseUrl() : '/api';
                     const res = await fetch(`${baseUrl}/upload`, {
                         method: 'POST',
                         headers: { 'Authorization': `Bearer ${token}` },

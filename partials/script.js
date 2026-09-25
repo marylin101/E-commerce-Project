@@ -1,13 +1,5 @@
 function getApiBaseUrl() {
-    if (typeof window !== 'undefined' && window.location && window.location.hostname) {
-        if (window.location.port === '5000') {
-            return '/api';
-        }
-        const protocol = (window.location.protocol && window.location.protocol.startsWith('http')) ? window.location.protocol : 'http:';
-        const hostname = window.location.hostname || 'localhost';
-        return `${protocol}//${hostname}:5000/api`;
-    }
-    return 'http://localhost:5000/api';
+    return '/api';
 }
 window.getApiBaseUrl = getApiBaseUrl;
 

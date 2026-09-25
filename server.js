@@ -22,7 +22,7 @@ const URL = process.env.CLIENT_URL;
 
 const corsOptions = {
     origin: function (origin, callback) {
-        // Reflect origin dynamically to support Live Server (127.0.0.1:5500, localhost:5500, etc.)
+        
         callback(null, origin || true);
     },
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
