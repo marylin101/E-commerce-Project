@@ -1,3 +1,19 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
 header {
     background: var(--primary-navy);
     border-bottom: 1px solid var(--border-subtle);
@@ -125,8 +141,8 @@ header {
 
 .main {
     max-width: 100%;
-    margin: 3rem auto;
-    padding: 0 1.5rem;
+    margin: 3rem auto auto 0 auto;
+    padding: 0 1.5rem 3rem;
 }
 
 .hero {

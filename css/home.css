@@ -1,7 +1,20 @@
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
 main {
     max-width: 100%;
-    margin: 2rem auto;
-    padding: 0 1.5rem;
+    margin: 2rem auto 0 auto;
+    padding: 0 1.5rem 3rem;
+    flex: 1;
 }
 
 h2 {
@@ -59,7 +72,7 @@ h2 {
     font-weight: 600;
     opacity: 0;
     transform: translateY(6px);
-    transform: var(--transition-clean);
+    transition: var(--transition-clean);
 }
 
 .item-card:hover .hover-btn {
