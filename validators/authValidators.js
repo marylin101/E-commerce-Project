@@ -1,16 +1,8 @@
-/**
- * validators/authValidators.js
- * ------------------------------------------------------------------
- * OWNER: Member 3 (Authentication, Security & Middleware)
- * Used with middleware/validateRequest.js
- * ------------------------------------------------------------------
- */
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function validateRegister(body) {
   const errors = [];
-  let { name, email, password } = body || {};
-  if (typeof email === 'string') email = email.trim();
+  const { name, email, password } = body;
 
   if (!name || typeof name !== 'string' || name.trim().length === 0) {
     errors.push('Name is required.');
@@ -29,8 +21,7 @@ function validateRegister(body) {
 
 function validateLogin(body) {
   const errors = [];
-  let { email, password } = body || {};
-  if (typeof email === 'string') email = email.trim();
+  const { email, password } = body;
 
   if (!email || typeof email !== 'string' || !EMAIL_REGEX.test(email)) {
     errors.push('A valid email address is required.');

@@ -1,14 +1,3 @@
-/**
- * controllers/authController.js
- * ------------------------------------------------------------------
- * OWNER: Member 3 (Authentication, Security & Middleware)
- *
- * Thin controller: extract data, call the service, return a response.
- * All validation already happened in validateRequest middleware; all
- * error throwing is caught by the centralized errorHandler (both are
- * wired up in server.js / routes), so controllers stay simple.
- * ------------------------------------------------------------------
- */
 const authService = require('../services/authService');
 const { sendSuccess } = require('../utils/apiResponse');
 
