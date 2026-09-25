@@ -1,13 +1,3 @@
-/**
- * utils/jwt.js
- * ------------------------------------------------------------------
- * OWNER: Member 3 (Authentication, Security & Middleware)
- *
- * Wraps jsonwebtoken so the sign/verify logic lives in one place.
- * The secret and expiry come from environment variables — never
- * hard-code the JWT secret in source control.
- * ------------------------------------------------------------------
- */
 const jwt = require('jsonwebtoken');
 
 function signToken(payload) {

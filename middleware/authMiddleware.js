@@ -1,15 +1,3 @@
-/**
- * middleware/authMiddleware.js
- * ------------------------------------------------------------------
- * OWNER: Member 3 (Authentication, Security & Middleware)
- *
- * Reads the Authorization header, extracts and verifies the JWT, and
- * attaches the decoded user to req.user. Rejects missing, malformed,
- * invalid, or expired tokens with the standard error envelope.
- *
- * Usage:  router.get('/orders', authMiddleware, orderController.mine);
- * ------------------------------------------------------------------
- */
 const { verifyToken } = require('../utils/jwt');
 const userRepository = require('../repositories/userRepository');
 const ApiError = require('../utils/ApiError');
@@ -34,7 +22,7 @@ async function authMiddleware(req, res, next) {
       throw ApiError.unauthorized('Invalid token.');
     }
 
-    const user = await userRepository.findUserById(decoded.sub);
+    const user = await userRepository.findById(decoded.sub);
     if (!user) {
       throw ApiError.unauthorized('User account no longer exists.');
     }

@@ -1,14 +1,3 @@
-/**
- * utils/ApiError.js
- * ------------------------------------------------------------------
- * OWNER: Member 3 (Authentication, Security & Middleware)
- *
- * A small custom Error subclass that carries an HTTP status code, so
- * controllers/services can `throw new ApiError(404, 'Product not found')`
- * and the centralized errorHandler (see middleware/errorHandler.js)
- * knows exactly how to respond.
- * ------------------------------------------------------------------
- */
 class ApiError extends Error {
   constructor(statusCode, message, details = null) {
     super(message);
@@ -28,9 +17,6 @@ class ApiError extends Error {
   }
   static notFound(message = 'Resource not found') {
     return new ApiError(404, message);
-  }
-  static conflict(message = 'Conflict') {
-    return new ApiError(409, message);
   }
   static internal(message = 'Internal server error') {
     return new ApiError(500, message);
