@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Header</title>
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <button type="button" class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="logo-group"> 
+                <img src="../assets/logo.png">
+                <div class ="brand"><a href="../pages/home.html"><span>THE</span> STUDY DESK</a></div>
+            </div>
+           
+            <div class="search-wrap" id="searchWrap">
+                <input type="text" class="search-input" placeholder="Search notebooks, pens, markers..." id="searchInput"/>
+                <img src="../assets/Search.png" alt="Search" id="searchIconBtn" style="cursor: pointer;">
+            </div>
+            <div class="header-actions">
+                <button type="button" class="mobile-search-toggle" id="mobileSearchToggle" aria-label="Toggle search bar">
+                    <img src="../assets/Search.png" alt="">
+                </button>
+                <a href="../pages/loginRegister.html" class="btn-login"><img src="../assets/login.png" alt="Login/register"></a>
+                <a href="../pages/cart.html" class="btn-cart" id="openCart"><img src="../assets/cart.png" alt="Cart"><span class="cart-count" id=cartBadge>0</span></a>
+            </div>
+        </div>
+    </header>
+    
+</body>
+</html>

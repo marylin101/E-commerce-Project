@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <div class="logo-group"> 
+                <img src="../assets/logo.png">
+                <div class ="brand"><a href="../pages/home.html"><span>THE</span> STUDY DESK</a></div>
+            </div>
+            <div class="header-actions">
+                <a href="../pages/loginRegister.html" class="btn-login"><img src="../assets/login.png" alt="Login/register"></a>
+                <a href="../pages/cart.html" class="btn-cart" id="openCart"><img src="../assets/cart.png" alt="Cart"><span class="cart-count" id=cartBadge>0</span></a>
+                
+            </div>
+        </div>
+    </header>
+    <main class="wrapper">
+        <div class="card">
+            <div class="tab-header">
+                <button class="tab-btn active" id="loginTabBtn" onclick="switchTab('login')">Sign In</button>
+                <button class="tab-btn" id="registerTabBtn" onclick="switchTab('register')">Create Account</button>
+            </div>
+            <div class="form-container">
+                <form id="loginForm" class="auth-form active" onsubmit="event.preventDefault()">
+                    <h2 class="form-title">Welcome Back</h2>
+                    <p class="form-subtitle">Enter your credentials to access your saved items and orders.</p>
+
+                    <div class="form-group">
+                        <label for="loginEmail">Email Address</label>
+                        <div class="input-wrap">
+                            <i class="fa-regular fa-envelope"></i>
+                            <input type="email" id="loginEmail" placeholder="name@example.com" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <div class="input-wrap">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" id="loginPassword" placeholder="••••••••" required />
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <label class="remember-me">
+                            <input type="checkbox" id="rememberMe" /> Remember me
+                        </label>
+                        <a href="#" class="forgot-link">Forgot password?</a>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Sign In</button>
+                </form>
+
+                <form id="registerForm" class="auth-form" onsubmit="event.preventDefault()">
+                    <h2 class="form-title">Join The Study Desk</h2>
+                    <p class="form-subtitle">Create an account to track shipments and access member rates.</p>
+
+                    <div class="form-group">
+                        <label for="regName">Full Name</label>
+                        <div class="input-wrap">
+                            <i class="fa-regular fa-user"></i>
+                            <input type="text" id="regName" placeholder="Alex Morgan" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="regEmail">Email Address</label>
+                        <div class="input-wrap">
+                            <i class="fa-regular fa-envelope"></i>
+                            <input type="email" id="regEmail" placeholder="name@example.com" required />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="regPassword">Password</label>
+                        <div class="input-wrap">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" id="regPassword" placeholder="At least 8 characters" required />
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-submit" style="margin-top: 8px;">Create Account</button>
+          
+                    <p class="footer-note">
+                        By registering, you agree to our <a href="#">Terms & Conditions</a>.
+                    </p>
+                </form>
+
+            </div>
+        </div>
+    </main>
+    <script src="../partials/script.js"></script>
+    <script src="../script/login.js"></script>
+    <script type="module" src="../script/authUI.js"></script>
+</body>
+</html>
