@@ -11,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../node_modules//@vscode/codicons/dist/codicon.css">
 </head>
 
 <body>
@@ -172,14 +173,14 @@
             <div id="cardPaymentView" class="modal_view">
                 <h2>Please Enter Your Card Details</h2>
                 <form id="cardForm">
-                    <div class="form_group">
+                    <div class="form-group">
                         <label for="cardHolder">Name on Card *</label>
                         <div class="icon">
                             <span class="codicon codicon-account"></span>
                             <input type="text" id="cardHolder" placeholder="e.g. Alice Matthews" required>
                         </div>
                     </div>
-                    <div class="form_group">
+                    <div class="form-group">
                         <label for="cardNum">Card Number *</label>
                         <div class="icon">
                             <span class="codicon codicon-credit-card"></span>
@@ -187,15 +188,15 @@
                                 inputmode="numeric" required>
                         </div>
                     </div>
-                    <div class="Form_row">
-                        <div class="form_group">
+                    <div class="form_row">
+                        <div class="form-group">
                             <label for="cardExpiry">Expiry Date *</label>
                             <div class="icon">
                                 <span class="codicon codicon-calendar"></span>
                                 <input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5" required>
                             </div>
                         </div>
-                        <div class="form_group">
+                        <div class="form-group">
                             <label for="cardHolder">CVV *</label>
                             <div class="icon">
                                 <span class="codicon codicon-lock"></span>
@@ -205,11 +206,12 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn-place-order" id="confirmCardBtn">
-                        Confirm &amp; Pay R <span class="modalTot">0.00</span>
-                        <span class="codicon codicon-arrow-right"></span>
-                    </button>
+                    
                 </form>
+                <button type="submit" class="btn-place-order" id="confirmCardBtn">
+                    Confirm &amp; Pay R <span class="modalTot">0.00</span>
+                    <span class="codicon codicon-arrow-right"></span>
+                </button>
             </div>
             <div id="eftPaymentView" class="modal_view">
                 <h2>You can pay via Instant EFT.</h2>
@@ -222,12 +224,13 @@
                     <div class="bank-row"><span>Branch Code</span><span>250655</span></div>
                     <div class="bank-row"><span>Amount</span><span class="modalTot">R 0.00</span></div>
                     <div class="bank-row"><span>Reference</span><span id="eftRef"></span></div>
-                    <div>
-                        <button type="paid" class="btn-place-order" id="confirmEftBtn">
-                            <span class="codicon codicon-arrow-check"></span>
-                            I've Made the Payment
-                        </button>
-                    </div>
+                   
+                </div> 
+                <div>
+                    <button type="submit" class="btn-place-order" id="confirmEftBtn">
+                        <span class="codicon codicon-arrow-check"></span>
+                        I've Made the Payment
+                    </button>
                 </div>
             </div>
         </div>

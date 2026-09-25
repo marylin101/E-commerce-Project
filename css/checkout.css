@@ -409,7 +409,7 @@ body {
     margin-bottom: 1.25rem;
 }
 
-.modal_view .form_group {
+.modal_view .form-group {
     margin-bottom: 1.1rem;
 }
 
@@ -418,7 +418,7 @@ body {
     gap: 1rem;
 }
 
-.modal_view .form_row .form_group {
+.modal_view .form_row .form-group {
     flex: 1;
 }
 

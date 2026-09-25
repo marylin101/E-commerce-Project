@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupShippingMethodListeners();
     setupPaymentMethodListeners();
     setupPlaceOrderHandler();
+    setupPaymentModal();
 });
 
 async function initCheckout() {
@@ -146,7 +147,7 @@ function setupPlaceOrderHandler() {
     const placeBtn = document.getElementById('placeOrderBtn');
     if (!placeBtn) return;
 
-    placeBtn.addEventListener('click', async () => {
+    placeBtn.addEventListener('click', () => {
         const form = document.getElementById('checkoutForm');
         if (form && !form.checkValidity()) {
             form.reportValidity();
@@ -158,20 +159,18 @@ function setupPlaceOrderHandler() {
             return;
         }
 
-        const street = document.getElementById('streetAddress')?.value || '';
-        const city = document.getElementById('city')?.value || '';
-        const postal = document.getElementById('postalCode')?.value || '';
-        const addressStr = `${street}, ${city}, ${postal}`.trim();
         openPaymentModal();
     });
 }
 
 function setupPaymentModal() {
+    const modal = document.getElementById('paymentModal');
     const cardView = document.getElementById('cardPaymentView');
     const eftView = document.getElementById('eftPaymentView');
-    const closeBtn = document.getElementById('modalCloseBtn');
+    const closeBtn = document.getElementById('closeModalBtn');
     const cardForm = document.getElementById('cardForm');
     const confirmEftBtn = document.getElementById('confirmEftBtn');
+
     if (!modal) return;
 
     closeBtn?.addEventListener('click', closePaymentModal);
@@ -200,13 +199,13 @@ function openPaymentModal() {
     eftView.classList.remove('active');
 
     const totalText = document.getElementById('checkoutGrandTotal').textContent.replace('R', '').trim();
-    document.querySelectorAll('.modalTotal').forEach(el => {
+    document.querySelectorAll('.modalTot').forEach(el => {
         el.textContent = el.closest('.bank-row') ? `R ${totalText}` : totalText;
     });
 
     if (selected?.value === 'eft') {
         eftView.classList.add('active');
-        document.getElementById('eftReference').textContent = 'ORD-' + Date.now().toString().slice(-8);
+        document.getElementById('eftRef').textContent = 'ORD-' + Date.now().toString().slice(-8);
     } else {
         cardView.classList.add('active');
     }
