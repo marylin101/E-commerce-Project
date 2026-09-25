@@ -3,19 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order</title>
+    <title>Order History</title>
+    <link rel="stylesheet" href="../css/variables.css">
     <link rel="stylesheet" href="../css/orders.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/responsive.css">
 </head>
 <body>
     <div id="header-placeholder"></div>
-    <div id="main">
-    <h1>Ordder History</h1>
-    <p></p>
-    <p></p>
-    <p></p>
-    <p></p>
-    </div>
+
+    <main class="orders-container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="../pages/home.html">Home</a>
+            <span class="separator">/</span>
+            <span class="current">My Account &amp; Order History</span>
+        </nav>
+
+        <section class="account-profile-card" id="userProfileBanner">
+            <div class="profile-info">
+                <div class="avatar-circle">
+                    <span id="avatarInitials">--</span>
+                </div>
+                <div class="profile-text">
+                    <h1 class="profile-name" id="accountCustomerName">Loading Account...</h1>
+                    <p class="profile-email" id="accountCustomerEmail">session@example.com</p>
+                </div>
+            </div>
+            <div class="profile-actions-wrapper">
+                <div class="profile-metrics">
+                    <div class="metric-pill">
+                        <span class="metric-val" id="totalOrdersCount">0</span>
+                        <span class="metric-lbl">Total Orders</span>
+                    </div>
+                    <div class="metric-pill">
+                        <span class="metric-val" id="activeOrdersCount">0</span>
+                        <span class="metric-lbl">In Transit</span>
+                    </div>
+                </div>
+                <button type="button" class="btn-customer-logout" id="customerLogoutBtn" title="Log Out of Account">
+                    Log Out
+                </button>
+            </div>
+        </section>
+
+        <section class="order-filter-tabs" id="orderStatusTabs">
+            <button type="button" class="tab-btn active" data-status="all">All Orders</button>
+            <button type="button" class="tab-btn" data-status="processing">Processing</button>
+            <button type="button" class="tab-btn" data-status="shipped">Shipped</button>
+            <button type="button" class="tab-btn" data-status="delivered">Delivered</button>
+        </section>
+
+        <div class="orders-list-wrapper" id="orderHistoryList">
+            <!-- Dynamic JS output -->
+        </div>
+    </main>
+
     <div id="footer-placeholder"></div>
+
     <script src="../partials/script.js"></script>
+    <script type="module" src="../script/orderhistory.js"></script>
 </body>
 </html>
