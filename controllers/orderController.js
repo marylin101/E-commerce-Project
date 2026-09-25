@@ -11,7 +11,7 @@ const createOrder = asyncHandler(async (req, res) => {
 
 const getOrders = asyncHandler(async (req, res) => {
   const userId = req.user.id;
-  const orders = await orderService.getOrders(userId);
+  const orders = await orderService.getOrders(userId, req.user.role);
   return sucResponse(res, { orders }, 200);
 });
 

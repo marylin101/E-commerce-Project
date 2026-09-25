@@ -6,13 +6,13 @@ const reviewController = require('../controllers/reviewController');
 const authenticate = require('../middleware/authMiddleware');
 const {requireAdmin} = require('../middleware/roleMiddleware');
 const validateRequest = require('../middleware/validateRequest');
-const { validateCreateProduct, validateUpdateProduct } = require('../validators/productValidators');
+const { validateCreateProduct } = require('../validators/productValidators');
 const { validateCreateReview } = require('../validators/reviewValidators');
 
 router.post('/', authenticate, requireAdmin, validateRequest(validateCreateProduct), productController.createProduct);
 router.get('/', productController.listProducts);
 router.get('/:id', productController.getProductById);
-router.put('/:id', authenticate, requireAdmin,validateRequest(validateUpdateProduct),  productController.updateProduct);
+router.put('/:id', authenticate, requireAdmin,  productController.updateProduct);
 router.delete('/:id', authenticate, requireAdmin, productController.deleteProduct);
 
 //review routes

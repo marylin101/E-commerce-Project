@@ -18,6 +18,9 @@ class ApiError extends Error {
   static notFound(message = 'Resource not found') {
     return new ApiError(404, message);
   }
+  static conflict(message = 'Conflict') {
+    return new ApiError(409, message);
+  }
   static internal(message = 'Internal server error') {
     return new ApiError(500, message);
   }

@@ -35,4 +35,4 @@ export async function deleteProduct(productId) {
     return await apiRequest(`/products/${productId}`, {
         method: 'DELETE',
     });
-}
+}

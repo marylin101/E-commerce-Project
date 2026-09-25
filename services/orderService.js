@@ -1,88 +1,93 @@
 const orderRepository = require('../repositories/orderRepository');
 const cartRepository = require('../repositories/cartRepository');
 const productRepository = require('../repositories/productRepository');
-const addressRepository = require('../repositories/addressRepository');
-const { badReq, notFound, forbidden } = require('../utils/badRequests');
+const ApiError = require('../utils/ApiError');
 
-const createOrder = async (userId, addressId) => {
-    if(!addressId){
-        throw badReq('The address ID is required to create an order.');
-    };
-    const cart = await cartRepository.getCart(userId);
-    if(!cart || !cart.items || cart.items.length === 0){
-        throw badReq('Your cart is currently empty. Please add items to your cart before placing an order.');
-    };
+const createOrder = async (userId, addressId = 'default') => {
+  const cart = await cartRepository.getCart(userId);
+  if (!cart || !cart.items || cart.items.length === 0) {
+    throw ApiError.badRequest('Your cart is currently empty. Please add items to your cart before placing an order.');
+  }
 
-    let totalAmount = 0;
-    const validatedItems = [];
+  let totalAmount = 0;
+  const validatedItems = [];
 
-    for(const item of cart.items){
-        const product = await productRepository.findProductById(item.productId);
-        if(!product){
-            throw badReq('Product with ID' +item.productId+ ' was nor found.');
-        }
-        if(product.stockQuantity=== 0){
-            throw badReq('The product ' +product.name+ ' is currently out of stock.');
-        }
-        if(product.stockQuantity < item.quantity){
-            throw badReq('The product ' +product.name+ ' only has ' +product.stockQuantity+ ' units in stock - you asked for '+item.quantity+'.');
-        }
-
-        totalAmount += product.price * item.quantity;
-        validatedItems.push({
-            productId: item.productId,
-            name: product.name,
-            quantity: item.quantity,
-            price: product.price
-        });
-        
+  for (const item of cart.items) {
+    const product = await productRepository.findProductById(item.productId);
+    if (!product) {
+      throw ApiError.badRequest(`Product with ID ${item.productId} was not found.`);
     }
-    const order = await orderRepository.createOrder({
-        userId, 
-        addressId, 
-        items: validatedItems, 
-        totalAmount
+    const currentStock = product.stockQty !== undefined ? product.stockQty : 0;
+    if (currentStock === 0) {
+      throw ApiError.badRequest(`The product "${product.name}" is currently out of stock.`);
+    }
+    if (currentStock < item.quantity) {
+      throw ApiError.badRequest(`The product "${product.name}" only has ${currentStock} units in stock - you asked for ${item.quantity}.`);
+    }
+
+    totalAmount += product.price * item.quantity;
+    validatedItems.push({
+      productId: item.productId,
+      nameSnapshot: product.name,
+      quantity: item.quantity,
+      priceSnapshot: product.price,
     });
-    for(const item of validatedItems){
-        const decStock = await productRepository.decreaseStock(item.productId,  item.quantity );
-        return decStock;
-    }
+  }
 
-    await cartRepository.clearCart(userId);
-    return order;
+  const order = await orderRepository.createOrder({
+    userId,
+    addressId: addressId || 'default',
+    items: validatedItems,
+    totalAmount,
+  });
 
+  // Decrease stock for all purchased items
+  for (const item of validatedItems) {
+    await productRepository.decreaseStock(item.productId, item.quantity);
+  }
+
+  // Clear cart after order creation
+  await cartRepository.clearCart(userId);
+
+  return order;
 };
 
-const getOrdersByUserId = async (userId) => {
-    const orders = await orderRepository.findOrdersByUserId(userId);
-    if(!orders || orders.length === 0){
-        throw notFound('There is no orders found for this user.');
-    }
-    return orders || [];
+const getOrders = async (userId, userRole) => {
+  if (userRole === 'admin') {
+    const allOrders = await orderRepository.getAllOrders();
+    return allOrders || [];
+  }
+  const orders = await orderRepository.findOrdersByUserId(userId);
+  return orders || [];
 };
 
-const getOrder = async (userId, orderId) => {
-    const order = await orderRepository.findOrderById(orderId);
-    if(!order){
-        throw notFound('Order not found.');
-    }
-   if(requestingUser.role !== "admin" && String(order.userId) !== String(userId)){ 
-        throw forbidden('Youdo not have access to this order.');
-    }
-    return order;
+const getOrderById = async (userId, orderId, requestingUserRole) => {
+  const order = await orderRepository.findOrderById(orderId);
+  if (!order) {
+    throw ApiError.notFound('Order not found.');
+  }
+  if (requestingUserRole !== 'admin' && String(order.userId) !== String(userId)) {
+    throw ApiError.forbidden('You do not have access to this order.');
+  }
+  return order;
 };
 
-const validStatuses = ['Pending', 'Shipped', 'Delivered', 'Cancelled'];
+const validStatuses = ['Pending', 'Paid', 'Shipped', 'Delivered', 'Cancelled'];
 
 const updateOrderStatus = async (orderId, status) => {
-    if(!validStatuses.includes(status)){
-        throw badReq('Invalid status. Valid statuses includes: ' + validStatuses.join(', '));
-    }
-    const updated = await orderRepository.updateOrderStatus(orderId, status);
-    if(!updated){
-        throw notFound('This order was not found.');
-    }
-    return updated;
+  const formattedStatus = status ? status.charAt(0).toUpperCase() + status.slice(1).toLowerCase() : status;
+  const match = validStatuses.find(s => s.toLowerCase() === (status || '').toLowerCase());
+  const finalStatus = match || formattedStatus;
+
+  if (!validStatuses.map(s => s.toLowerCase()).includes((status || '').toLowerCase())) {
+    throw ApiError.badRequest(`Invalid status. Valid statuses include: ${validStatuses.join(', ')}`);
+  }
+
+  const updated = await orderRepository.updateOrderStatus(orderId, finalStatus);
+  if (!updated) {
+    throw ApiError.notFound('This order was not found.');
+  }
+  return updated;
 };
 
-module.exports = { createOrder, getOrdersByUserId, getOrder, updateOrderStatus };
+module.exports = { createOrder, getOrderById, getOrders, updateOrderStatus };

@@ -1,12 +1,14 @@
 const ApiError = require('../utils/ApiError');
+const { ValidationError } = require('../utils/validators');
 
 // eslint-disable-next-line no-unused-vars
 function errorHandler(err, req, res, next) {
   // Known, expected errors (thrown deliberately via ApiError.*)
-  if (err instanceof ApiError|| err.statusCode) {
+  if (err instanceof ApiError) {
     return res.status(err.statusCode).json({
       success: false,
       data: null,
+      message: err.message,
       error: {
         message: err.message,
         ...(err.details ? { details: err.details } : {}),
@@ -20,6 +22,14 @@ function errorHandler(err, req, res, next) {
       success: false,
       data: null,
       error: { message: 'A record with this value already exists.' },
+    });
+  }
+
+  if (err instanceof ValidationError) {
+    return res.status(err.statusCode).json({
+      success: false,
+      data: null,
+      error: { message: err.message },
     });
   }
 

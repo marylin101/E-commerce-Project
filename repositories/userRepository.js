@@ -16,10 +16,11 @@ function collection() {
 // expects passwordHash to already be hashed (bcrypt) by the caller
 async function createUser({ name, email, passwordHash, role }) {
   requireFields({ name, email, passwordHash }, ['name', 'email', 'passwordHash']);
-  requireValidEmail(email);
+  const cleanEmail = typeof email === 'string' ? email.trim().toLowerCase() : email;
+  requireValidEmail(cleanEmail);
   requireValidRole(role || 'customer', ROLES);
 
-  const doc = buildUserDocument({ name, email, passwordHash, role });
+  const doc = buildUserDocument({ name, email: cleanEmail, passwordHash, role });
 
   try {
     const result = await collection().insertOne(doc);
@@ -35,8 +36,15 @@ async function findUserById(id) {
 }
 
 async function findUserByEmail(email) {
-  requireValidEmail(email);
-  return collection().findOne({ email });
+  if (!email || typeof email !== 'string') return null;
+  const cleanEmail = email.trim().toLowerCase();
+  requireValidEmail(cleanEmail);
+  let user = await collection().findOne({ email: cleanEmail });
+  if (!user) {
+    const escaped = cleanEmail.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    user = await collection().findOne({ email: new RegExp(`^${escaped}$`, 'i') });
+  }
+  return user;
 }
 
 async function updateUser(id, updates) {
@@ -61,4 +69,4 @@ async function deleteUser(id) {
   return result.deletedCount > 0;
 }
 
-module.exports = { createUser, findUserById, findUserByEmail, updateUser, deleteUser };
+module.exports = {createUser, findUserById, findUserByEmail, updateUser, deleteUser, findById: findUserById, findByEmail: findUserByEmail,};

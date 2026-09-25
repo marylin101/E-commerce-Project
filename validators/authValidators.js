@@ -2,7 +2,8 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function validateRegister(body) {
   const errors = [];
-  const { name, email, password } = body;
+  let { name, email, password } = body || {};
+  if (typeof email === 'string') email = email.trim();
 
   if (!name || typeof name !== 'string' || name.trim().length === 0) {
     errors.push('Name is required.');
@@ -21,7 +22,8 @@ function validateRegister(body) {
 
 function validateLogin(body) {
   const errors = [];
-  const { email, password } = body;
+  let { email, password } = body || {};
+  if (typeof email === 'string') email = email.trim();
 
   if (!email || typeof email !== 'string' || !EMAIL_REGEX.test(email)) {
     errors.push('A valid email address is required.');

@@ -1,9 +1,23 @@
-const sucResponse = (res, data, statuscode = 200 ) => {
-    return res.status(statuscode).json({
-        success: true,
-        data,
-        error: null,
-    });
-};
+function sendSuccess(res, arg2, arg3) {
+  let statusCode = 200;
+  let data = null;
 
-module.exports = {sucResponse};
+  if (typeof arg2 === 'number') {
+    statusCode = arg2;
+    data = arg3;
+  } else {
+    data = arg2;
+    if (typeof arg3 === 'number') {
+      statusCode = arg3;
+    }
+  }
+
+  return res.status(statusCode).json({
+    success: true,
+    data,
+    error: null,
+  });
+}
+
+module.exports = { sendSuccess, sucResponse: sendSuccess };
+
