@@ -1,0 +1,619 @@
+/* =====================================================================
+   RESPONSIVE.CSS
+   Member 2 — Responsive UI
+   ---------------------------------------------------------------------
+   This file layers responsive behaviour on top of the existing
+   page-specific stylesheets. It is loaded LAST on every page so its
+   rules win on equal specificity, without needing to rewrite the
+   component styles Member 1 already built.
+
+   Breakpoints used across this file:
+     Desktop : > 1024px (default styles, no media query needed)
+     Tablet  : 641px – 1024px
+     Mobile  : <= 640px  (with a couple of finer <= 480px tweaks)
+
+   The one exception below (>=641 and <=768 hamburger nav) is intentional:
+   the header needs to switch to the compact mobile pattern a little
+   earlier than the general "mobile" breakpoint because of how many
+   controls live in the header (logo, search, login, cart).
+===================================================================== */
+
+/* ---------------------------------------------------------------------
+   0. GLOBAL SAFETY NET
+   Prevents horizontal scrollbars/overflow no matter what page you're on,
+   and makes sure media never breaks out of its container.
+--------------------------------------------------------------------- */
+html {
+    -webkit-text-size-adjust: 100%;
+}
+
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+img, svg, video {
+    max-width: 100%;
+    height: auto;
+}
+
+* {
+    min-width: 0;
+}
+
+/* Prevent iOS Safari from zooming in on focus for real text inputs */
+@media (max-width: 640px) {
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="search"],
+    input[type="number"],
+    textarea,
+    select {
+        font-size: 16px;
+    }
+}
+
+/* =====================================================================
+   1. HEADER / SEARCH / MOBILE NAVIGATION
+===================================================================== */
+.mobile-nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.mobile-nav-toggle span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--surface-card, #ffffff);
+    border-radius: 2px;
+    transition: var(--transition-clean, all 0.25s ease);
+}
+
+.mobile-nav-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.mobile-nav-toggle.active span:nth-child(2) { opacity: 0; }
+.mobile-nav-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.mobile-search-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.4rem;
+    flex-shrink: 0;
+}
+
+.mobile-search-toggle img {
+    width: 20px;
+    height: 20px;
+    filter: invert(1);
+}
+
+/* Tablet: let the category bar scroll horizontally instead of wrapping
+   or overflowing the viewport. */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .subnav {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+    }
+
+    .subnav::-webkit-scrollbar {
+        height: 4px;
+    }
+
+    .nav-container {
+        padding: 0.3rem 1rem;
+    }
+
+    .search-wrap {
+        max-width: 320px;
+    }
+}
+
+/* Mobile header: collapse search + nav behind small controls */
+@media (max-width: 768px) {
+    .mobile-nav-toggle {
+        display: flex;
+        order: -1;
+    }
+
+    .mobile-search-toggle {
+        display: inline-flex;
+    }
+
+    .nav-container {
+        flex-wrap: wrap;
+        padding: 0.5rem 0.75rem;
+        row-gap: 0.5rem;
+    }
+
+    .logo-group {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .brand {
+        font-size: 1.05rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .nav-container img {
+        height: 38px;
+        width: auto;
+    }
+
+    .header-actions {
+        gap: 0.5rem;
+    }
+
+    /* Search bar becomes a full-width row that appears on demand */
+    .search-wrap {
+        display: none;
+        order: 5;
+        width: 100%;
+        max-width: 100%;
+        margin-top: 0.35rem;
+    }
+
+    .search-wrap.mobile-search-open {
+        display: inline-flex;
+    }
+
+    /* Category nav becomes an in-flow dropdown under the header */
+    #categoryNav.subnav {
+        display: none;
+        flex-direction: column;
+        gap: 0;
+        padding: 0.25rem 1rem 0.5rem 1rem;
+        overflow-x: visible;
+    }
+
+    body.mobile-menu-open #categoryNav.subnav {
+        display: flex;
+    }
+
+    #categoryNav.subnav .nav-item {
+        width: 100%;
+        text-align: left;
+        padding: 0.85rem 0.25rem;
+        border-bottom: 1px solid var(--border-subtle, #edf0f5);
+    }
+
+    #categoryNav.subnav span.active {
+        border-bottom: 1px solid var(--accent-gold, #c59b27);
+        padding-bottom: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .btn-login, .btn-cart {
+        padding: 0.4rem 0.6rem;
+    }
+
+    .btn-cart span:not(.cart-count) {
+        display: none;
+    }
+}
+
+/* =====================================================================
+   2. HOME PAGE / PRODUCT GRIDS
+===================================================================== */
+@media (max-width: 1024px) {
+    .grid,
+    .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+        gap: 1.5rem 1rem;
+    }
+}
+
+@media (max-width: 640px) {
+    main {
+        padding: 0 1rem;
+    }
+
+    .grid,
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem 0.75rem;
+        margin-top: 1rem;
+    }
+
+    .title {
+        font-size: 0.85rem;
+    }
+
+    .price {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .grid,
+    .product-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem 0.6rem;
+    }
+}
+
+/* Hover-reveal "Add to cart" buttons don't work on touch devices since
+   there's no hover state — keep them visible on touch-sized screens. */
+@media (max-width: 768px) {
+    .hover-btn {
+        opacity: 1;
+        transform: translateY(0);
+        position: static;
+        margin-top: 0.6rem;
+    }
+
+    .image-container {
+        margin-bottom: 0.5rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .welcome-banner,
+    .admin-welcome-banner {
+        padding: 1.25rem;
+    }
+
+    .welcome-title {
+        font-size: 1.5rem;
+    }
+
+    .catalog-meta-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.35rem;
+    }
+}
+
+/* =====================================================================
+   3. PRODUCT DETAIL PAGE
+===================================================================== */
+@media (max-width: 640px) {
+    .product-detail-container {
+        padding: 0 1rem;
+    }
+
+    .product-showcase-grid {
+        padding: 1rem;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .product-title {
+        font-size: 1.5rem;
+    }
+
+    .price-val {
+        font-size: 1.4rem;
+    }
+
+    .thumbnail-strip {
+        flex-wrap: wrap;
+    }
+
+    .thumb-btn {
+        width: 56px;
+        height: 56px;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .btn-add-cart, .btn-buy-now {
+        flex: 1 1 auto;
+        width: 100%;
+    }
+
+    .tabs-header {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        flex-wrap: nowrap;
+        white-space: nowrap;
+    }
+
+    .product-tabs-section, .reviews-section {
+        padding: 1.25rem;
+    }
+}
+
+/* =====================================================================
+   4. CART PAGE
+   (Base layout added here since the underlying page had no styling yet
+   for the active cart state — kept minimal and hooked into the mobile
+   breakpoint so it stacks cleanly on small screens.)
+===================================================================== */
+.active-cart-layout {
+    display: grid;
+    grid-template-columns: 1.7fr 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+.cart-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+@media (max-width: 900px) {
+    .active-cart-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .cart-container {
+        padding: 0 1rem;
+    }
+
+    .cart-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.35rem;
+    }
+
+    .cart-actions {
+        text-align: center;
+    }
+
+    .checkout-btn,
+    .shop-btn {
+        display: block;
+        width: 100%;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    .empty-cart {
+        margin: 24px auto;
+        padding: 40px 16px;
+    }
+}
+
+/* =====================================================================
+   5. CHECKOUT PAGE
+===================================================================== */
+@media (max-width: 640px) {
+    .checkout-container {
+        padding: 0 1rem;
+    }
+
+    .checkout-title {
+        font-size: 1.5rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .checkout-card {
+        padding: 1.25rem;
+    }
+
+    .card-header h2 {
+        font-size: 1.1rem;
+    }
+
+    .summary-card {
+        position: static;
+    }
+
+    .radio-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .btn-place-order {
+        padding: 0.85rem;
+    }
+}
+
+/* =====================================================================
+   6. LOGIN / REGISTER PAGE
+===================================================================== */
+@media (max-width: 640px) {
+    .wrapper {
+        padding: 24px 12px;
+    }
+
+    .card {
+        max-width: 100%;
+    }
+
+    .form-container {
+        padding: 24px 18px;
+    }
+
+    .tab-btn {
+        padding: 12px 8px;
+        font-size: 0.85rem;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+}
+
+/* =====================================================================
+   7. ORDER HISTORY PAGE
+===================================================================== */
+@media (max-width: 640px) {
+    .orders-container {
+        padding: 0 1rem;
+    }
+
+    .account-profile-card {
+        padding: 1.25rem;
+    }
+
+    .profile-info {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+
+    .profile-metrics {
+        flex-wrap: wrap;
+        width: 100%;
+    }
+
+    .metric-pill {
+        flex: 1 1 45%;
+        min-width: 100px;
+    }
+
+    .order-filter-tabs {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .order-card-header,
+    .order-card-footer {
+        padding: 1rem 1.25rem;
+    }
+
+    .order-item-row {
+        flex-wrap: wrap;
+    }
+
+    .order-actions {
+        width: 100%;
+    }
+
+    .btn-action-outline,
+    .btn-action-primary {
+        flex: 1;
+    }
+}
+
+/* =====================================================================
+   8. ADMIN PAGES
+===================================================================== */
+@media (max-width: 900px) {
+    .admin-container {
+        padding: 0 1rem;
+    }
+
+    .admin-quick-actions {
+        flex-wrap: wrap;
+    }
+
+    .table-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-filter-group {
+        max-width: 100%;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 640px) {
+    .admin-welcome-banner {
+        padding: 1.25rem;
+    }
+
+    .admin-title {
+        font-size: 1.4rem;
+    }
+
+    .admin-tabs-nav {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .modal-dialog {
+        padding: 1.25rem;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .form-group.full-width {
+        grid-column: span 1 !important;
+    }
+}
+
+/* Admin tables already scroll horizontally via .table-card
+   (overflow-x: auto) — just make sure rows don't get crushed. */
+@media (max-width: 640px) {
+    .admin-table th,
+    .admin-table td {
+        padding: 0.75rem 0.85rem;
+        font-size: 0.85rem;
+    }
+}
+
+/* =====================================================================
+   9. FOOTER
+   (Member 1's footer.css media query used an invalid unit
+   "max-width: 100%", which browsers ignore, so the footer never
+   actually reflowed on small screens. This corrects it to a real
+   breakpoint.)
+===================================================================== */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 1.25rem;
+        align-items: center;
+    }
+
+    .footer-nav {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .footer-attribution {
+        align-items: center;
+    }
+
+    .footer-logo img {
+        height: 70px;
+        width: auto;
+    }
+}
+
+/* =====================================================================
+   10. ABOUT / CONTACT (small extra polish beyond existing breakpoints)
+===================================================================== */
+@media (max-width: 640px) {
+    .contact-page-container {
+        padding: 0 1rem;
+    }
+
+    .contact-form-card,
+    .direct-channels-card {
+        padding: 24px 16px;
+    }
+
+    .submit-btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .main {
+        padding: 0 1rem;
+    }
+}

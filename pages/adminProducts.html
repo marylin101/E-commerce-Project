@@ -3,19 +3,282 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>adminProducts</title>
+    <title>Admin Management Portal</title>
     <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/responsive.css">
 </head>
 <body>
-    <div id="header-placeholder"></div>
-    <div id="main">
-    <h1>Welcome Back</h1>
-    <p></p>
-    <p></p>
-    <p></p>
-    <p></p>
-    </div>
-    <div id="footer-placeholder"></div>
+    <main class="admin-container">
+       
+        <section class="admin-welcome-banner">
+            <div class="admin-welcome-content">
+                <div class="banner-top-row">
+                    <span class="admin-badge">Store Administration</span>
+                    <button type="button" class="btn-theme-toggle" id="adminThemeToggle" title="Toggle Dark/Light Theme">
+                        <span id="themeToggleIcon">Dark Mode</span>
+                    </button>
+                    <button type="button" class="btn-logout" id="adminLogoutBtn" title="Log Out of Admin Portal">
+                        Log Out
+                    </button>
+                </div>
+                <h1 id="adminWelcomeTitle" class="admin-title">Welcome back, Admin <span id="adminNameDisplay">Manager</span>!</h1>
+                <p class="admin-subtitle">
+                   “Organize today. Grow tomorrow.”- Your trusted Got
+                </p>
+            </div>
+            <div class="admin-quick-actions">
+                <button type="button" class="btn-action" id="openProductModalBtn">+ Add New Product</button>
+                <button type="button" class="btn-action" id="openCategoryModalBtn">+ Add Category</button>
+            </div>
+        </section>
+
+        <section class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-info">
+                    <span class="metric-label">Total Revenue</span>
+                    <strong class="metric-value" id="metricRevenue">R 0.00</strong>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-info">
+                    <span class="metric-label">Total Products</span>
+                    <strong class="metric-value" id="metricProducts">0 Items</strong>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-info">
+                    <span class="metric-label">Active Orders</span>
+                    <strong class="metric-value" id="metricOrders">0 Pending</strong>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-info">
+                    <span class="metric-label">Categories</span>
+                    <strong class="metric-value" id="metricCategories">0 Active</strong>
+                </div>
+            </div>
+        </section>
+
+        <section class="admin-tabs-nav" id="adminMainTabs">
+            <button type="button" class="admin-tab-btn active" data-tab="products" id="tabBtnProducts">
+                Products Management
+            </button>
+            <button type="button" class="admin-tab-btn" data-tab="orders" id="tabBtnOrders">
+                Customer Orders
+            </button>
+            <button type="button" class="admin-tab-btn" data-tab="categories" id="tabBtnCategories">
+                Categories Management
+            </button>
+        </section>
+
+        <section class="admin-tab-content active" id="sectionProducts">
+            <div class="table-toolbar">
+                <div class="search-filter-group">
+                    <input type="text" id="adminProductSearch" placeholder="Search products by name or SKU..." class="admin-input">
+                    <select id="adminProductCategoryFilter" class="admin-select">
+                        <option value="all">All Categories</option>
+                    </select>
+                </div>
+                <span class="table-count" id="adminProductsCount">0 Products</span>
+            </div>
+
+            <div class="table-card">
+                <table class="admin-table" id="adminProductsTable">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Product Name</th>
+                            <th>SKU / ID</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Stock</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminProductsTbody">
+                        <!-- Dynamic JS rendering -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="admin-tab-content" id="sectionOrders" style="display: none;">
+            <div class="table-toolbar">
+                <div class="search-filter-group">
+                    <input type="text" id="adminOrderSearch" placeholder="Search orders by ID or customer..." class="admin-input">
+                    <select id="adminOrderStatusFilter" class="admin-select">
+                        <option value="all">All Statuses</option>
+                        <option value="processing">Processing</option>
+                        <option value="shipped">Shipped</option>
+                        <option value="delivered">Delivered</option>
+                    </select>
+                </div>
+                <span class="table-count" id="adminOrdersCount">0 Orders</span>
+            </div>
+
+            <div class="table-card">
+                <table class="admin-table" id="adminOrdersTable">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer Name</th>
+                            <th>Date</th>
+                            <th>Items</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminOrdersTbody">
+                        <!-- Dynamic JS rendering -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="admin-tab-content" id="sectionCategories" style="display: none;">
+            <div class="table-toolbar">
+                <input type="text" id="adminCategorySearch" placeholder="Search categories..." class="admin-input">
+                <span class="table-count" id="adminCategoriesCount">0 Categories</span>
+            </div>
+
+            <div class="table-card">
+                <table class="admin-table" id="adminCategoriesTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Category Name</th>
+                            <th>Slug</th>
+                            <th>Description</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminCategoriesTbody">
+                        <!-- Dynamic JS rendering -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <div class="modal-overlay" id="productModal" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-header">
+                    <h2 id="productModalTitle">Add New Product</h2>
+                    <button class="modal-close" id="closeProductModalBtn">&times;</button>
+                </div>
+                <form id="productModalForm">
+                    <input type="hidden" id="editProductId">
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label for="modalProductName">Product Name *</label>
+                            <input type="text" id="modalProductName" required placeholder="e.g. A5 Hardcover Journal">
+                        </div>
+                        <div class="form-group">
+                            <label for="modalProductSKU">SKU / Code *</label>
+                            <input type="text" id="modalProductSKU" required placeholder="SKU-NB-001">
+                        </div>
+                        <div class="form-group">
+                            <label for="modalProductCategory">Category *</label>
+                            <select id="modalProductCategory" required class="admin-select">
+                                <option value="Notebooks">Notebooks</option>
+                                <option value="Writing">Writing</option>
+                                <option value="Art Supplies">Art Supplies</option>
+                                <option value="Desk Tools">Desk Tools</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="modalProductPrice">Price (R ZAR) *</label>
+                            <input type="number" step="0.01" id="modalProductPrice" required placeholder="240.00">
+                        </div>
+                        <div class="form-group">
+                            <label for="modalProductStock">Stock Quantity *</label>
+                            <input type="number" id="modalProductStock" required placeholder="18">
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Product Images (Upload Files or Paste URLs)</label>
+                            
+                            <!-- Image 1 (Main) -->
+                            <div style="margin-bottom: 8px;">
+                                <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted);">Image 1 (Main View)</label>
+                                <div style="display: flex; gap: 8px; align-items: center;">
+                                    <input type="file" id="modalProductImageFile1" class="admin-image-file-input" accept="image/*" style="flex: 1;">
+                                    <input type="text" id="modalProductImageUrl1" placeholder="Image 1 URL e.g. /assets/product1.png" style="flex: 1;">
+                                </div>
+                            </div>
+
+                            <!-- Image 2 -->
+                            <div style="margin-bottom: 8px;">
+                                <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted);">Image 2 (Secondary View)</label>
+                                <div style="display: flex; gap: 8px; align-items: center;">
+                                    <input type="file" id="modalProductImageFile2" class="admin-image-file-input" accept="image/*" style="flex: 1;">
+                                    <input type="text" id="modalProductImageUrl2" placeholder="Image 2 URL (optional)" style="flex: 1;">
+                                </div>
+                            </div>
+
+                            <!-- Image 3 -->
+                            <div style="margin-bottom: 8px;">
+                                <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted);">Image 3 (Tertiary View)</label>
+                                <div style="display: flex; gap: 8px; align-items: center;">
+                                    <input type="file" id="modalProductImageFile3" class="admin-image-file-input" accept="image/*" style="flex: 1;">
+                                    <input type="text" id="modalProductImageUrl3" placeholder="Image 3 URL (optional)" style="flex: 1;">
+                                </div>
+                            </div>
+
+                            <small class="field-hint">Accepts JPG, PNG, GIF, or WEBP images up to 5MB.</small>
+                            <div id="imagePreviewContainer" style="margin-top: 8px; display: none; flex-wrap: wrap; gap: 8px;">
+                                <img id="modalImagePreview1" src="" alt="Image 1 Preview" style="max-height: 70px; border-radius: 4px; border: 1px solid #ddd; padding: 2px; display: none;">
+                                <img id="modalImagePreview2" src="" alt="Image 2 Preview" style="max-height: 70px; border-radius: 4px; border: 1px solid #ddd; padding: 2px; display: none;">
+                                <img id="modalImagePreview3" src="" alt="Image 3 Preview" style="max-height: 70px; border-radius: 4px; border: 1px solid #ddd; padding: 2px; display: none;">
+                            </div>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="modalProductDesc">Description</label>
+                            <textarea id="modalProductDesc" rows="3" placeholder="Enter product description..."></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-cancel" id="cancelProductModalBtn">Cancel</button>
+                        <button type="submit" class="btn-save btn-glow-gold" id="saveProductBtn">Save Product</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="modal-overlay" id="categoryModal" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-header">
+                    <h2 id="categoryModalTitle">Add / Edit Category</h2>
+                    <button class="modal-close" id="closeCategoryModalBtn">&times;</button>
+                </div>
+                <form id="categoryModalForm">
+                    <input type="hidden" id="editCategoryId">
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label for="modalCatName">Category Name *</label>
+                            <input type="text" id="modalCatName" required placeholder="e.g. Fine Stationery">
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="modalCatSlug">Category Slug *</label>
+                            <input type="text" id="modalCatSlug" required placeholder="fine-pens">
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="modalCatDesc">Description</label>
+                            <textarea id="modalCatDesc" rows="3" placeholder="Category description..."></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-cancel" id="cancelCategoryModalBtn">Cancel</button>
+                        <button type="submit" class="btn-save btn-glow-gold" id="saveCategoryBtn">Save Category</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
     <script src="../partials/script.js"></script>
+    <script src="../script/admin.js"></script>
 </body>
 </html>

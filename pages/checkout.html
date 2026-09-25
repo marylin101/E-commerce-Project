@@ -4,18 +4,169 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout</title>
+    <link rel="stylesheet" href="../css/variables.css">
     <link rel="stylesheet" href="../css/checkout.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/responsive.css">
 </head>
 <body>
     <div id="header-placeholder"></div>
-    <div id="main">
-    <p></p>
-    <p></p>
-    <p></p>
-    <p></p>
-    </div>
+
+    <main class="checkout-container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="../pages/home.html">Home</a>
+            <span class="separator">/</span>
+            <a href="../pages/cart.html">Cart</a>
+            <span class="separator">/</span>
+            <span class="current">Secure Checkout</span>
+        </nav>
+
+        <h1 class="checkout-title">Complete Your Order</h1>
+
+        <div class="checkout-layout" id="checkoutMainLayout">
+            <form class="checkout-form-column" id="checkoutForm" onsubmit="return false;">
+                <section class="checkout-card">
+                    <div class="card-header">
+                        <span class="step-num">1</span>
+                        <h2>Shipping &amp; Contact Details</h2>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label for="fullName">Full Name *</label>
+                            <input type="text" id="fullName" placeholder="e.g. Jane Doe" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="emailAddress">Email Address *</label>
+                            <input type="email" id="emailAddress" placeholder="jane.doe@example.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phoneNumber">Phone Number *</label>
+                            <input type="tel" id="phoneNumber" placeholder="+27 82 123 4567" required>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="streetAddress">Street Address *</label>
+                            <input type="text" id="streetAddress" placeholder="123 University Road, Suite 4B" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="city">City *</label>
+                            <input type="text" id="city" placeholder="Cape Town / Johannesburg" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="postalCode">Postal Code *</label>
+                            <input type="text" id="postalCode" placeholder="8001" required>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="checkout-card">
+                    <div class="card-header">
+                        <span class="step-num">2</span>
+                        <h2>Select Delivery Option</h2>
+                    </div>
+
+                    <div class="radio-options-group">
+                        <label class="radio-card active">
+                            <input type="radio" name="shippingMethod" value="standard" checked>
+                            <div class="radio-content">
+                                <span class="radio-title">Standard Courier (2-4 Business Days)</span>
+                                <span class="radio-subtitle">Door-to-door delivery via Express Courier</span>
+                            </div>
+                            <span class="radio-price">R 65.00</span>
+                        </label>
+
+                        <label class="radio-card">
+                            <input type="radio" name="shippingMethod" value="express">
+                            <div class="radio-content">
+                                <span class="radio-title">Overnight Priority Courier</span>
+                                <span class="radio-subtitle">Next business day arrival before 12:00 PM</span>
+                            </div>
+                            <span class="radio-price">R 120.00</span>
+                        </label>
+                    </div>
+                </section>
+
+                <section class="checkout-card">
+                    <div class="card-header">
+                        <span class="step-num">3</span>
+                        <h2>Payment Method</h2>
+                    </div>
+
+                    <div class="radio-options-group">
+                        <label class="radio-card active">
+                            <input type="radio" name="paymentMethod" value="card" checked>
+                            <div class="radio-content">
+                                <span class="radio-title">Credit / Debit Card (Visa, Mastercard)</span>
+                                <span class="radio-subtitle">Encrypted 256-bit instant card payment</span>
+                            </div>
+                        </label>
+
+                        <label class="radio-card">
+                            <input type="radio" name="paymentMethod" value="eft">
+                            <div class="radio-content">
+                                <span class="radio-title">Instant EFT</span>
+                                <span class="radio-subtitle">Pay securely via your bank account</span>
+                            </div>
+                        </label>
+                    </div>
+                </section>
+            </form>
+
+            <aside class="checkout-summary-column">
+                <div class="summary-card">
+                    <h2 class="summary-title">Order Summary</h2>
+
+                    <div class="summary-items-list" id="checkoutItemsList">
+                        <!-- Populated dynamically via script/checkout.js -->
+                    </div>
+
+                    <div class="promo-box">
+                        <input type="text" id="promoCodeInput" placeholder="Promo / Voucher Code">
+                        <button type="button" id="applyPromoBtn">Apply</button>
+                    </div>
+
+                    <div class="summary-breakdown">
+                        <div class="breakdown-row">
+                            <span>Subtotal</span>
+                            <span id="checkoutSubtotal">R 0.00</span>
+                        </div>
+                        <div class="breakdown-row">
+                            <span>Estimated Delivery</span>
+                            <span id="checkoutShipping">R 65.00</span>
+                        </div>
+                        <div class="breakdown-row discount-row" style="display: none;" id="discountRow">
+                            <span>Discount</span>
+                            <span id="checkoutDiscount">- R 0.00</span>
+                        </div>
+                        <div class="divider"></div>
+                        <div class="breakdown-row total-row">
+                            <span>Total Due</span>
+                            <span id="checkoutGrandTotal" class="grand-total">R 0.00</span>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn-place-order" id="placeOrderBtn">
+                        Place Order &amp; Pay
+                    </button>
+
+                    <p class="terms-notice">
+                        By placing your order, you agree to our Terms of Service and Privacy Policy.
+                    </p>
+                </div>
+            </aside>
+        </div>
+    </main>
+
     <div id="footer-placeholder"></div>
+
     <script src="../partials/script.js"></script>
-    
+    <script type="module" src="../script/checkout.js"></script>
 </body>
 </html>

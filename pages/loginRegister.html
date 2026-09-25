@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/responsive.css">
 </head>
 <body>
     <header>
@@ -49,7 +51,7 @@
 
                     <div class="form-actions">
                         <label class="remember-me">
-                            <input type="checkbox" /> Remember me
+                            <input type="checkbox" id="rememberMe" /> Remember me
                         </label>
                         <a href="#" class="forgot-link">Forgot password?</a>
                     </div>
@@ -95,8 +97,8 @@
             </div>
         </div>
     </main>
-    <div id="footer-placeholder"></div>
     <script src="../partials/script.js"></script>
     <script src="../script/login.js"></script>
+    <script type="module" src="../script/authUI.js"></script>
 </body>
 </html>
