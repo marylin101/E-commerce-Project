@@ -3,20 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product</title>
+    <title>Product Details</title>
+    <link rel="stylesheet" href="../css/variables.css">
     <link rel="stylesheet" href="../css/product.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/responsive.css">
 </head>
 <body>
     <div id="header-placeholder"></div>
     <div id="filt-nav-placeholder"></div>
-     <div id="main">
-    <h1></h1>
-    <p></p>
-    <p></p>
-    <p></p>
-    <p></p>
-    </div>
+
+    <main class="product-detail-container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="../pages/home.html">Home</a>
+            <span class="separator">/</span>
+            <span class="current" id="breadcrumbProductName">Product Details</span>
+        </nav>
+
+        <div class="product-showcase-grid" id="productShowcase">
+
+            <section class="product-gallery">
+                <div class="main-image-wrapper" id="productMainImageBox">
+                    <span class="badge-tag" id="productBadgeTag">Bestseller</span>
+                    <div class="image-placeholder" id="mainImagePlaceholder">
+                        <span id="productImageTitleText">[ Loading Product Image... ]</span>
+                    </div>
+                </div>
+                <div class="thumbnail-strip" id="productThumbnails">
+                    <button type="button" class="thumb-btn active" data-img-idx="0"><span>View 1</span></button>
+                    <button type="button" class="thumb-btn" data-img-idx="1"><span>View 2</span></button>
+                    <button type="button" class="thumb-btn" data-img-idx="2"><span>View 3</span></button>
+                </div>
+            </section>
+
+            <section class="product-info-column">
+                <span class="product-tag" id="productCategoryTag">Category</span>
+                <h1 class="product-title" id="productTitleHeading">Loading Product...</h1>
+
+                <div class="rating-row">
+                    <div class="stars" id="productStarRating">★★★★★</div>
+                    <span class="rating-score" id="productRatingScore">4.9</span>
+                    <span class="review-count" id="productReviewCount">(0 Customer Reviews)</span>
+                </div>
+
+                <div class="price-row">
+                    <span class="price-val" id="productPriceValue">R 0.00</span>
+                    <span class="stock-status in-stock" id="stockStatusBadge">In Stock</span>
+                </div>
+
+                <p class="product-description" id="productDescriptionText">
+                    Loading description from database...
+                </p>
+
+                <div class="divider"></div>
+
+                <div class="purchase-controls">
+                    <div class="quantity-selector">
+                        <label for="qtyInput">Quantity:</label>
+                        <div class="qty-stepper">
+                            <button type="button" class="stepper-btn" id="qtyMinusBtn">-</button>
+                            <input type="number" id="qtyInput" value="1" min="1" max="99">
+                            <button type="button" class="stepper-btn" id="qtyPlusBtn">+</button>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button type="button" class="btn-add-cart" id="addToCartBtn">
+                            <img src="../assets/cart.png" alt="Cart Icon" class="btn-icon">
+                            Add to Study Tray
+                        </button>
+                        <button type="button" class="btn-buy-now" id="buyNowBtn">Buy Now</button>
+                    </div>
+                </div>
+
+                <div class="feature-badges">
+                    <div class="feature-item">
+                        <span>Free Delivery on orders over R500</span>
+                    </div>
+                    <div class="feature-item">
+                        <span>30-Day Money-Back Guarantee</span>
+                    </div>
+                    <div class="feature-item">
+                        <span>Archival Acid-Free Quality Standard</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <section class="product-tabs-section">
+            <div class="tabs-header">
+                <button type="button" class="tab-btn active" data-tab="overview">Overview &amp; Features</button>
+                <button type="button" class="tab-btn" data-tab="specs">Specifications</button>
+                <button type="button" class="tab-btn" data-tab="shipping">Shipping &amp; Returns</button>
+            </div>
+
+            <div class="tab-content active" id="tabContentOverview">
+                <p id="overviewText">Loading overview details...</p>
+            </div>
+
+            <div class="tab-content" id="tabContentSpecs" style="display: none;">
+                <ul class="specs-list" id="specsList">
+                    <!-- Populated dynamically via JS -->
+                </ul>
+            </div>
+
+            <div class="tab-content" id="tabContentShipping" style="display: none;">
+                <p id="shippingText">Standard courier delivery takes 2-4 business days nationwide.</p>
+            </div>
+        </section>
+
+        <section class="reviews-section" id="reviewsSection">
+            <h2 class="section-title">Customer Reviews</h2>
+            <div class="add-review-card">
+                <h3>Submit a Review</h3>
+                <form id="reviewForm" onsubmit="return false;">
+                    <div class="review-form-grid">
+                        <div class="form-group">
+                            <label for="reviewerName">Your Name *</label>
+                            <input type="text" id="reviewerName" required placeholder="e.g. Alex M.">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reviewRating">Rating (1 to 5 Stars) *</label>
+                            <select id="reviewRating" required class="rating-select">
+                                <option value="5">★★★★★ (5 - Excellent)</option>
+                                <option value="4">★★★★☆ (4 - Very Good)</option>
+                                <option value="3">★★★☆☆ (3 - Good)</option>
+                                <option value="2">★★☆☆☆ (2 - Fair)</option>
+                                <option value="1">★☆☆☆☆ (1 - Poor)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="reviewComment">Your Review *</label>
+                            <textarea id="reviewComment" rows="3" required placeholder="Write your experience with this stationery item..."></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-submit-review" id="submitReviewBtn">Submit Review</button>
+                </form>
+            </div>
+
+            <div class="reviews-list" id="reviewsList">
+                <!-- Dynamically injected via script/product.js -->
+            </div>
+        </section>
+
+        <section class="related-products-section">
+            <h2 class="section-title">Complement Your Study Space</h2>
+            <div class="product-grid" id="relatedProductsGrid">
+                <!-- Related items loaded dynamically -->
+            </div>
+        </section>
+    </main>
+
     <div id="footer-placeholder"></div>
+
     <script src="../partials/script.js"></script>
+    <script src="../script/product.js"></script>
 </body>
 </html>

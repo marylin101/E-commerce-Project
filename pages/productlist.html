@@ -3,20 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product List</title>
+    <title>Personalized Shop Catalog</title>
+    <link rel="stylesheet" href="../css/variables.css">
     <link rel="stylesheet" href="../css/products.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/responsive.css">
 </head>
 <body>
     <div id="header-placeholder"></div>
     <div id="filt-nav-placeholder"></div>
-     <div id="main">
-    <h1>Product List</h1>
-    <p></p>
-    <p></p>
-    <p></p>
-    <p></p>
-    </div>
+
+    <main class="products-page-container">
+        <section class="welcome-banner" id="userGreetingSection">
+            <div class="welcome-content">
+                <span class="welcome-badge"><span class="customer-name" id="customerDisplayName">Valued Scholar</span>'s Personalized Workspace</span>
+                <h1 id="userGreetingName" class="welcome-title">Welcome back, <span class="customer-name" id="customerDisplayName">Valued Scholar</span>!</h1>
+                <p class="welcome-subtitle">
+                    Explore your personalized stationery catalog filled with premium notebooks, archival pens, and artisanal desk tools selected just for you.
+                </p>
+            </div>
+        </section>
+
+       <div class="main">
+            <h2>Stationery</h2>
+            <div class="grid" id="catalogGrid"></div>
+        </div>
+        </div>
+
+        <div class="pagination-container">
+            <button type="button" class="btn-load-more" id="loadMoreProductsBtn">Load More Stationery</button>
+        </div>
+    </main>
+
     <div id="footer-placeholder"></div>
+
     <script src="../partials/script.js"></script>
+    <script src="../script/productlist.js"></script>
 </body>
 </html>

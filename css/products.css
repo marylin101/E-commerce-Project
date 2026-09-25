@@ -1,3 +1,254 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+body {
+    background-color: #f8fafc;
+    color: var(--text-primary);
+    line-height: 1.5;
+}
+
+.products-page-container {
+    max-width: 1240px;
+    margin: 2rem auto 3rem auto;
+    padding: 0 1.5rem;
+}
+
+.welcome-banner {
+    background: linear-gradient(135deg, var(--primary-navy) 0%, #172a5a 100%);
+    color: #ffffff;
+    border-radius: var(--radius-lg);
+    padding: 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+    box-shadow: var(--shadow-md);
+    position: relative;
+    overflow: hidden;
+}
+
+.welcome-banner::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(197, 155, 39, 0.25) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.welcome-content {
+    max-width: 780px;
+}
+
+.welcome-badge {
+    display: inline-block;
+    background: rgba(197, 155, 39, 0.2);
+    color: var(--accent-gold);
+    border: 1px solid rgba(197, 155, 39, 0.4);
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+}
+
+.welcome-title {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+}
+
+.welcome-title .customer-name {
+    color: var(--accent-gold);
+}
+
+.welcome-subtitle {
+    font-size: 0.95rem;
+    color: #cbd5e1;
+    line-height: 1.6;
+}
+
+.catalog-meta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 1.5rem;
+}
+
+.catalog-heading {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    color: var(--primary-navy);
+}
+
+.results-count {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 2rem 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.item-card {
+    background: var(--surface-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    transition: var(--transition-clean);
+    position: relative;
+}
+
+.item-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: #cbd5e1;
+}
+
+.image-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1/1;
+    background: #f1f5f9;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.85rem;
+}
+
+.image-container span {
+    font-size: 0.85rem;
+    color: #64748b;
+    font-weight: 500;
+    text-align: center;
+    padding: 0.5rem;
+}
+
+.hover-btn {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    background: var(--primary-navy);
+    color: #ffffff;
+    text-decoration: none;
+    text-align: center;
+    border: none;
+    padding: 0.65rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
+    font-weight: 600;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: var(--transition-clean);
+}
+
+.item-card:hover .hover-btn {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.hover-btn:hover {
+    background: var(--accent-gold);
+}
+
+.tag {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--accent-gold);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 0.2rem;
+}
+
+.title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--primary-navy);
+    margin-bottom: 0.5rem;
+}
+
+.title a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.title a:hover {
+    color: var(--accent-gold);
+}
+
+.bottom-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-top: auto;
+}
+
+.price {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--primary-navy);
+}
+
+.stock {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+}
+
+.stock.in-stock { background: #dcfce7; color: #15803d; }
+.stock.low-stock { background: #fef9c3; color: #a16207; }
+
+.pagination-container {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.btn-load-more {
+    background: transparent;
+    border: 2px solid var(--primary-navy);
+    color: var(--primary-navy);
+    padding: 0.75rem 2rem;
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition-clean);
+}
+
+.btn-load-more:hover {
+    background: var(--primary-navy);
+    color: #ffffff;
+}
+
+@media (max-width: 768px) {
+    .welcome-banner {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.5rem;
+    }
+}
+
 :root {
     --surface-card: #fff;
     --primary-navy: #0f1c3f;
@@ -9,7 +260,7 @@
     --border-subtle: #e5e9f2;
     --radius-sm: 6px;
     --radius-md: 12px;
-    --transition-clean: all 0.2s cubic-bezier(0.4, 0 , 0.2, 1);
+    --transition-clean: all 0.2s ease;
 }
 
 *{
@@ -17,4 +268,111 @@
     margin: 0%;
     padding: 0%;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+main {
+    max-width: 100%;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+}
+
+h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color:#0f1c3f;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 2.5rem 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.item-card {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.image-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1/1;
+    background: #f1f4f9;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.8rem;
+}
+
+.image-container span {
+    font-size: 0.8rem;
+    color: #73849e;
+    font-weight: 500;
+}
+
+.hover-btn {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    background: #0f1c3f;
+    color: #fff;
+    border: none;
+    padding: 0.65rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    opacity: 0;
+    transform: translateY(6px);
+    transform: var(--transition-clean);
+}
+
+.item-card:hover .hover-btn {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.hover-btn:hover {
+    background: #c59b27;
+}
+
+.tag {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #c59b27;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.title {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: #0f1c3f;
+    margin: 0.2rem 0;
+}
+
+.bottom-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-top: 0.2rem;
+}
+
+.price {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #0f1c3f;
+}
+
+.stock {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #166534;
 }
